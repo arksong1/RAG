@@ -4,7 +4,9 @@ from pathlib import Path
 
 def load_settings():
     """Load settings from YAML and override with environment variables"""
-    with open("config/settings.yaml") as file:
+    project_root = Path(__file__).resolve().parent.parent
+    config_path = project_root / "config" / "settings.yaml"
+    with open(config_path, encoding="utf-8") as file:
         settings = yaml.safe_load(file)
     
     # Override với environment variables
