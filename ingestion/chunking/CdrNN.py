@@ -79,7 +79,7 @@ def chunk_CdrNN():
         text_parts = (
             f"Quy định chuẩn đầu ra ngoại ngữ: {cdr_doctitle}",
             f"Phần quy định chuẩn đầu ra ngoại ngữ: {cdr_arttitle}",
-            f"Nội dung quy định chuẩn đầu ra ngoại ngữ: {hp_content}",
+            f"Nội dung quy định chuẩn đầu ra ngoại ngữ: {cdr_text}",
         )
         text = "\n".join(text_parts)
         chunks.append(
