@@ -1,10 +1,11 @@
 import logging
 from sentence_transformers import SentenceTransformer
 
-from core.settings_loader import load_settings
+from core.load_settings import load_settings
 
 logger = logging.getLogger("embedding")
 
+settings = load_settings()
 EMBEDDING_CONFIG = settings["embedding"]
 EMBEDDING_MODEL = EMBEDDING_CONFIG["model"]
 

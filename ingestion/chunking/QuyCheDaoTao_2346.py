@@ -4,8 +4,8 @@ from pathlib import Path
 
 from datetime import datetime
 
-from core.settings_loader import load_settings
-from ingestion.helpers.make_metadata import make_metadata
+from core.load_settings import load_settings
+
 
 settings = load_settings()
 logger = logging.getLogger("ingestion")
@@ -79,7 +79,7 @@ def chunk_QuyCheDaoTao_2346():
             continue
 
         base_metadata = {
-            "type": "quyche_dao_tao_2346_MDC",
+            "type": "quy_che_dao_tao_2346_MDC",
             "quyche_id": quyche_id,
             "quyche_title": quyche_title,
             "quyche_chapter_title": quyche_chapter_title,

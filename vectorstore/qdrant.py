@@ -3,7 +3,7 @@ from qdrant_client.models import VectorParams, Distance, SparseVectorParams, Spa
 import logging 
 import os
 
-from core.settings_loader import load_settings
+from core.load_settings import load_settings
 
 settings = load_settings()
 logger = logging.getLogger("vector_database")

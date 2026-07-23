@@ -1,7 +1,7 @@
 import logging
 
-from core.settings_loader import load_settings
 from embedding.embedder import embed_texts
+from core.load_settings import load_settings
 
 settings = load_settings()
 logger = logging.getLogger("embedding")
