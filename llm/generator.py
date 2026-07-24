@@ -1,8 +1,9 @@
 import logging
 import ollama
 import time
-from llm.prompt import build_prompt
-from load_settings import load_settings
+from llm.prompt import build_prompt, SYSTEM_PROMPT
+from core.load_settings import load_settings
+
 
 settings = load_settings()
 logger = logging.getLogger("llm")
@@ -25,8 +26,6 @@ def generate_answer(context: str, question: str) -> str:
         logger.warning("Received empty question for answer generation")
         return "Câu hỏi không được để trống."
 
-    # Tạo prompt từ context và question
-    prompt = build_prompt(context, question)
     start = time.time()
 
     logger.info(f"Generating answer using model: {MODEL_NAME}")
@@ -34,15 +33,19 @@ def generate_answer(context: str, question: str) -> str:
     try:
         if MODEL_PROVIDER == "ollama":
             # Configure ollama client với base_url và timeout
-            client = ollama.CLient(host=MODEL_BASE_URL, timeout=MODEL_TIMEOUT)
+            client = ollama.Client(host=MODEL_BASE_URL, timeout=MODEL_TIMEOUT)
             response = client.chat(
                 model=MODEL_NAME,
                 messages=[
                     {
+                        "role": "system",
+                        "content": SYSTEM_PROMPT
+                    },
+                    {
                         "role": "user",
-                        "content": prompt
-                    }
-                ],
+                        "content": build_prompt(context, question)
+                 }
+                ],  
                 options = {
                     "temperature": MODEL_TEMPERATURE,
                     "num_predict": MODEL_MAX_TOKENS # so luong token toi da tuc la do dai cau tra loi

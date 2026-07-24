@@ -19,12 +19,16 @@ def get_model() -> SentenceTransformer:
     
     return _model    
 
-def embed_texts(texts: list[str]) -> list[list[float]]:
+def embed_texts(texts: list[str], is_query: bool = False) -> list[list[float]]:
     if not texts:
         logger.warning("No texts providing for embedding")
         return []
 
+    # E5 models require prefixes
+    prefix = "query: " if is_query else "passage: "
+    prefixed_texts = [f"{prefix}{t}" for t in texts]
+
     model = get_model()
-    embeddings = model.encode(texts, normalize_embeddings=True, convert_to_tensor=False).tolist() # chuyen thanh list de luu vao qdrant BAT BUOC
+    embeddings = model.encode(prefixed_texts, normalize_embeddings=True, convert_to_tensor=False).tolist() # chuyen thanh list de luu vao qdrant BAT BUOC
     logger.info(f"Complete embedding texts {len(texts)}")
-    return embeddings   
+    return embeddings

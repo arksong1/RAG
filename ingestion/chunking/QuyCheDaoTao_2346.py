@@ -6,7 +6,6 @@ from datetime import datetime
 
 from core.load_settings import load_settings
 
-
 settings = load_settings()
 logger = logging.getLogger("ingestion")
 
@@ -54,18 +53,9 @@ def chunk_QuyCheDaoTao_2346():
         if not quyche_title or not isinstance(quyche_title,str):
             logger.warning(f"Quy che dao tao at index {idx} has invalid or missing title")
             continue
-        quyche_chapter_title =  quy_che_dao_tao_2346_MDC.get("chapter_title")
-        if quyche_chapter_title and not isinstance(quyche_chapter_title, str):
-            logger.warning(f"Quy che dao tao at index {idx} has invalid or missing chapter title")
-            continue
-        quyche_article_number =  quy_che_dao_tao_2346_MDC.get("article_number")
-        if quyche_article_number and not isinstance(quyche_article_number, str):
-            logger.warning(f"Quy che dao tao at index {idx} has invalid or missing article number")
-            continue
-        quyche_article_title =  quy_che_dao_tao_2346_MDC.get("article_title")
-        if quyche_article_title and not isinstance(quyche_article_title, str):
-            logger.warning(f"Quy che dao tao at index {idx} has invalid or missing article title")
-            continue
+        quyche_chapter_title =  quy_che_dao_tao_2346_MDC.get("chapter_title", "")
+      
+        quyche_article_title =  quy_che_dao_tao_2346_MDC.get("article_title", "")
         
         quyche_path = quy_che_dao_tao_2346_MDC.get("path")
         
@@ -83,7 +73,6 @@ def chunk_QuyCheDaoTao_2346():
             "quyche_id": quyche_id,
             "quyche_title": quyche_title,
             "quyche_chapter_title": quyche_chapter_title,
-            "quyche_article_number": quyche_article_number,
             "quyche_article_title": quyche_article_title,
             "quyche_path": quyche_path,
             "quyche_text": quyche_text,
@@ -95,7 +84,6 @@ def chunk_QuyCheDaoTao_2346():
         text_parts = (
             f"Tên quy chế: {quyche_title}",
             f"Chương: {quyche_chapter_title}",
-            f"Điều: {quyche_article_number}",
             f"Tiêu đề điều: {quyche_article_title}",
             f"Nội dung điều: {quyche_text}",
         )

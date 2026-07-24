@@ -25,7 +25,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: nmk-chatbot
+    container_name: humg_chatbot
     ports:
       - "8000:8000"
     environment:

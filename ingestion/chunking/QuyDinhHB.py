@@ -56,9 +56,7 @@ def chunk_QuyDinhHB():
             continue
 
         hb_section = QuyDinhHB.get("section")
-        if not hb_section or not isinstance(hb_section,str):
-            logger.warning(f"Quy dinh hoc bong at index {idx} has invalid or missing section")
-            continue
+     
 
         hb_content = QuyDinhHB.get("content")
         if not hb_content or not isinstance(hb_content,str):

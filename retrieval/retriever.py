@@ -14,7 +14,7 @@ logger = logging.getLogger("retrieval")
 
 RETRIEVAL_CONFIG = settings["retrieval"]
 COLLECTION_NAME = settings["vector_database"]["collection_name"]
-DEFAULT_K = RETRIEVAL_CONFIG.get("default_k", 5)
+DEFAULT_K = RETRIEVAL_CONFIG.get("top_k", 5)
 RETRIEVAL_SCORE_THRESHOLD = RETRIEVAL_CONFIG.get("score_threshold", 0.3)
 
 def retrieve(query: str) -> list[RetrievedDocument]:
@@ -24,7 +24,7 @@ def retrieve(query: str) -> list[RetrievedDocument]:
 
     try:
         client: QdrantClient = get_qdrant_client()
-        vectors = embed_texts([query])
+        vectors = embed_texts([query], is_query=True)
         if not vectors:
             logger.warning("Embedding result is empty, stopping retrieval")
             return []
@@ -34,7 +34,8 @@ def retrieve(query: str) -> list[RetrievedDocument]:
         response = client.query_points(
             collection_name=COLLECTION_NAME,
             query=query_vector,
-            limit=RETRIEVAL_TOP_K,
+            using="dense",
+            limit=DEFAULT_K,
             with_payload = True,
             score_threshold=RETRIEVAL_SCORE_THRESHOLD
         )
@@ -53,6 +54,7 @@ def retrieve(query: str) -> list[RetrievedDocument]:
                   text=payload.get("text", ""),
                   metadata={key: value for key, value in payload.items() if key != "text"},
            ))
+           logger.debug(f"  -> [{point.id}] score={point.score:.4f} | text={payload.get('text','')[:80]}")
 
         logger.info(f"Retrieved {len(documents)} documents")
         return documents

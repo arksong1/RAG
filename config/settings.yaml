@@ -1,6 +1,6 @@
 # Cau hinh application
 app:
-  name: NMK-chatbot-app
+  name: HUMG-chatbot-app
   version: 1.0.0-beta
   env: production
 
@@ -40,12 +40,12 @@ llm:
   base_url: http://localhost:11434
   temperature: 0.2
   max_tokens: 1024              # Giảm từ 1024 → 512 để nhanh hơn
-  timeout: 60                  # request timeout in seconds
+  timeout: 300                  # request timeout in seconds
 
 # Cau hinh RAG
 retrieval:
   top_k: 10 # so luong chunk lay ve de dung lam context cho LLM
-  score_threshold: 0.0 # sau khi tinh cosine similarity thi chi lay nhung chunk co diem so tren nguong nay
+  score_threshold: 0.5 # sau khi tinh cosine similarity thi chi lay nhung chunk co diem so tren nguong nay
   dense_weight: 0.6 # trong hybrid retriever, trong so cua dense retriever
   bm25_weight: 0.4 # trong hybrid retriever, trong so cua bm25 retriever
 
